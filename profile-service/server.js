@@ -7,7 +7,6 @@ let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 let session = require('express-session');
 let MongoStore = require('connect-mongo')(session);
-const nodemailer = require('nodemailer');
 
 mongoose.connect('mongodb+srv://biprajit:biprajit@cluster0.has27be.mongodb.net/hotelty?retryWrites=true&w=majority', {
   useNewUrlParser: true,
@@ -35,18 +34,20 @@ app.use(session({
 }));
 
 app.set('views', path.join(__dirname, 'views'));
+
 app.set('view engine', 'ejs');	
 app.engine('html', require('ejs').renderFile);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(express.static(__dirname + '/views'));
+// app.use(express.static(__dirname + '/views'));
+app.use('/pr/css', express.static(__dirname + '/views/css'));
 
 const routes = require('./routes');
-app.use('/', routes);
+app.use('/pr', routes);
 
-app.post('/check_room_availability', function(req, res) {
+app.post('/pr/check_room_availability', function(req, res) {
     let room = req.body.room;
     let checkIn = new Date(req.body.checkIn);
     let checkOut = new Date(req.body.checkOut);
@@ -62,9 +63,9 @@ app.post('/check_room_availability', function(req, res) {
         if (err) throw err;
   
         if (result) {
-            return res.redirect('http://localhost:5003/roombooked');
+            return res.redirect('/dsb/roombooked');
         } else {
-            return res.redirect('http://localhost:5003/create');
+            return res.redirect('/dsb/create');
         }
     });
   });

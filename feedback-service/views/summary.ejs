@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+    <script src="https://unpkg.com/ejs/ejs.min.js"></script>
     <div id="navbar"></div>
-	<script>
-		fetch('navbar.html')
-		.then(response => response.text())
-		.then(html => {
-			document.getElementById('navbar').innerHTML = html;
-		})
-		.catch(error => {
-			console.error('Error fetching the navbar:', error);
-		});
-
-	</script>
+    <script>
+        fetch('/ds/navbar') 
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('navbar').innerHTML = ejs.render(html);
+        })
+        .catch(error => {
+            console.error('Error fetching the navbar:', error);
+        });
+    </script>
 <head>
    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" type="text/css" href="/dsb/css/style.css">
 </head>
 <body>
     <h1 style="text-align: center;">Paradise Cove Retreat Analytics Dashboard</h1>
@@ -27,13 +27,13 @@
 
 <div id="footer" style="position: fixed; left: 0; bottom: 0; width: 100%;"></div>
 	<script>
-		fetch('footer.html')
-		.then(response => response.text())
-		.then(html => {
-			document.getElementById('footer').innerHTML = html;
-		})
-		.catch(error => {
-			console.error('Error fetching the footer:', error);
-		});
+		fetch('/ds/footer') 
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('footer').innerHTML = ejs.render(html);
+        })
+        .catch(error => {
+            console.error('Error fetching the footer:', error);
+        });
 	</script>
 </html>

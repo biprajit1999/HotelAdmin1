@@ -4,6 +4,11 @@ const Detail = require('./models/detail');
 const Admin = require('./models/admin');
 const Feedback = require('./models/summary');
 
+router.get('/navbar', (req, res) => {
+    res.render('navbar.ejs'); // Renders the navbar.ejs file in the views directory
+});
+
+
 
 router.get('/fb_dashboard', function (req, res, next) {
 		Feedback.find({}, (err, feedbacks) => {
@@ -15,7 +20,6 @@ router.get('/fb_dashboard', function (req, res, next) {
 			}
 		});	  
 	});
-
 
 
 
@@ -36,6 +40,10 @@ router.get('/fb_dashboard', function (req, res, next) {
 router.get('/summary', function (req, res, next) {
 		res.render('summary.ejs');
   });
+
+  router.get('/footer', (req, res) => {
+    res.render('footer.ejs'); // Renders the navbar.ejs file in the views directory
+});
 
 
 module.exports = router;

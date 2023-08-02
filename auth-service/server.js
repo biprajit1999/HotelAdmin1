@@ -7,9 +7,7 @@ let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 let session = require('express-session');
 let MongoStore = require('connect-mongo')(session);
-const nodemailer = require('nodemailer');
 const axios = require('axios');
-
 
 mongoose.connect('mongodb+srv://biprajit:biprajit@cluster0.has27be.mongodb.net/hotelty?retryWrites=true&w=majority', {
   useNewUrlParser: true,
@@ -44,12 +42,12 @@ app.engine('html', require('ejs').renderFile);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(express.static(__dirname + '/views'));
+// app.use(express.static(__dirname + '/views'));
+app.use('/dsb/css', express.static(__dirname + '/views/css'));
 
 const routes = require('./routes');
 
-app.use('/', routes);
-
+app.use('/lg', routes);
 
 
 const PORT = process.env.PORT || 5005;

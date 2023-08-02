@@ -6,7 +6,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
 	</script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="./css/main.css">
+	<link rel="stylesheet" type="text/css" href="/dsb/css/main.css">
 
 	<style>
         body {
@@ -35,7 +35,7 @@
 
 				$.ajax({
 					type: 'POST',
-					url: '/forgetpass',
+					url: '/lg/forgetpass',
 					data: $('#form2').serialize(),
 					dataType: "json",
 					success: function(response){
@@ -75,24 +75,25 @@
 			<div  class="mssg bg-danger">
 				<span id="check"></span>
 				</div>
-				<div id="LangTable"><a href="/profile" id="aa"></a>
+				<div id="LangTable"><a href="/pr/profile" id="aa"></a>
 				</div>
-				<div><span>Login?</span><a href="/login">Click here</a></div>
+				<div><span>Login?</span><a href="/lg/login">Click here</a></div>
 			</div>
-			<div id="LangTable"><a href="/login" id="aa"></a>
+			<div id="LangTable"><a href="/lg/login" id="aa"></a>
 			</div>
 		</div>
 
 </body>
+<script src="https://unpkg.com/ejs/ejs.min.js"></script>
 <div id="footer" style="position: fixed; left: 0; bottom: 0; width: 100%;"></div>
 	<script>
-		fetch('footer.html')
-		.then(response => response.text())
-		.then(html => {
-			document.getElementById('footer').innerHTML = html;
-		})
-		.catch(error => {
-			console.error('Error fetching the footer:', error);
-		});
+		fetch('/lg/footer') 
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('footer').innerHTML = ejs.render(html);
+        })
+        .catch(error => {
+            console.error('Error fetching the footer:', error);
+        });
 	</script>
 </html>

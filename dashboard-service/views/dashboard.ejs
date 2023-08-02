@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+    <script src="https://unpkg.com/ejs/ejs.min.js"></script>
     <div id="navbar"></div>
-	<script>
-		fetch('navbar.html')
-		.then(response => response.text())
-		.then(html => {
-			document.getElementById('navbar').innerHTML = html;
-		})
-		.catch(error => {
-			console.error('Error fetching the navbar:', error);
-		});
-
-	</script>
+    <script>
+        fetch('/dsb/navbar') 
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('navbar').innerHTML = ejs.render(html);
+        })
+        .catch(error => {
+            console.error('Error fetching the navbar:', error);
+        });
+    </script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
+        <link rel="stylesheet" type="text/css" href="/dsb/css/style.css">
     <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
     <style>
         .bt {
@@ -79,7 +79,7 @@
                     <td><%= user.email %></td>
                     <td>
                         <div class="bt">
-                            <button class="btn btn-success" onclick="window.location.href='/update'">Update</button><br>
+                            <button class="btn btn-success" onclick="window.location.href='/dsb/update'">Update</button><br>
                             <button class="btn btn-danger" onclick="deleteUser('<%= user.aadhar %>')">Delete</button><br>
                         </div>
                     </td>
@@ -128,7 +128,7 @@
 <script>
     function deleteUser(id) {
         $.ajax({
-            url: '/form/delete/' + id,
+            url: '/dsb/form/delete/' + id,
             type: 'DELETE',
             success: function (response) {
                 console.log(response);
@@ -149,13 +149,13 @@
 
 <div id="footer" style="position: fixed; left: 0; bottom: 0; width: 100%;"></div>
 	<script>
-		fetch('footer.html')
-		.then(response => response.text())
-		.then(html => {
-			document.getElementById('footer').innerHTML = html;
-		})
-		.catch(error => {
-			console.error('Error fetching the footer:', error);
-		});
+		fetch('/dsb/footer') 
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('footer').innerHTML = ejs.render(html);
+        })
+        .catch(error => {
+            console.error('Error fetching the footer:', error);
+        });
 	</script>
 </html>

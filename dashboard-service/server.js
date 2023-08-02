@@ -43,15 +43,16 @@ app.engine('html', require('ejs').renderFile);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(express.static(__dirname + '/views'));
+// app.use(express.static(__dirname + '/views'));
+app.use('/dsb/css', express.static(__dirname + '/views/css'));
 
 
 
 const routes = require('./routes');
 
-app.use('/', routes);
+app.use('/dsb', routes);
 
-app.post('/form', function(req, res) {
+app.post('/dsb/form', function(req, res) {
     let name = req.body.name;
     let phone = req.body.phone;
     let aadhar = req.body.aadhar;
@@ -74,7 +75,7 @@ app.post('/form', function(req, res) {
       if (err) throw err;
   
       if (result) {
-        return res.redirect('/duplicate');
+        return res.redirect('/dsb/duplicate');
       } else {
         db.collection('detail').findOne({
           room: room,
@@ -87,7 +88,7 @@ app.post('/form', function(req, res) {
           if (err) throw err;
   
           if (result) {
-            return res.redirect('/roombooked');
+            return res.redirect('/dsb/roombooked');
           } else {
             db.collection('detail').insertOne(data, function(err, collection) {
               if (err) throw err;
@@ -95,7 +96,7 @@ app.post('/form', function(req, res) {
               sendConfirmationEmail(email, name, room, checkIn, checkOut);
             });
   
-            return res.redirect('/success');
+            return res.redirect('/dsb/success');
           }
         });
       }
@@ -140,7 +141,7 @@ app.post('/form', function(req, res) {
 
 
 
-app.delete('/form/delete/:aadhar', function(req, res) {
+app.delete('/dsb/form/delete/:aadhar', function(req, res) {
     let aadhar = req.params.aadhar;
   
     db.collection('detail').deleteOne({ aadhar: aadhar }, function(err, result) {
@@ -163,7 +164,7 @@ app.delete('/form/delete/:aadhar', function(req, res) {
   const Detail = require('./models/detail');
   
   
-  app.put("/form/update", (req, res) => {
+  app.put("/dsb/form/update", (req, res) => {
     let query = { aadhar: req.body.aadhar };
     Detail.findOneAndUpdate(query, req.body, { new: true })
       .then(() => {
@@ -175,7 +176,7 @@ app.delete('/form/delete/:aadhar', function(req, res) {
   });
   
   
-  app.get("/form/retrieve", (req, res) => {
+  app.get("/dsb/form/retrieve", (req, res) => {
     let query = { aadhar: req.query.aadhar };
     Detail.findOne(query)
       .then((data) => {

@@ -5,7 +5,13 @@ const Admin = require('./models/admin');
 const Feedback = require('./models/summary');
 const axios = require('axios');
 
-
+router.get('/navbar', function (req, res, next) {
+	return res.render('navbar.ejs');
+	});
+  
+  router.get('/footer', function (req, res, next) {
+	return res.render('footer.ejs');
+	});
   
 router.get('/dashboard' , function (req, res, next) {
 		Detail.find({}, function (err, users) {

@@ -11,6 +11,7 @@ router.get('/login', function (req, res, next) {
 
 
 
+
 router.post('/login', async function (req, res, next) {
 	try {
 	  const data = await Admin.findOne({ email: req.body.email });
@@ -18,6 +19,7 @@ router.post('/login', async function (req, res, next) {
 	  if (data) {
 		if (data.password == req.body.password) {
 		  req.session.userId = data.unique_id;
+		  console.log("Success");
 		  res.send({ "Success": "Success!" });
 		} else {
 		  res.send({ "Success": "Wrong password!" });
@@ -32,7 +34,12 @@ router.post('/login', async function (req, res, next) {
   });
 
 
+  router.get('/footer', function (req, res, next) {
+	return res.render('footer.ejs');
+});
   
+  
+
 router.get('/logout', function (req, res, next) {
 	console.log("logout")
 	if (req.session) {
@@ -40,7 +47,8 @@ router.get('/logout', function (req, res, next) {
     	if (err) {
     		return next(err);
     	} else {
-    		return res.redirect('/login');
+    		return res.redirect('/lg/login');
+			
     	}
     });
 }
@@ -76,5 +84,4 @@ router.post('/forgetpass', function (req, res, next) {
 });
 
 module.exports = router;
-
 

@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+    <script src="https://unpkg.com/ejs/ejs.min.js"></script>
     <div id="navbar"></div>
-	<script>
-		fetch('navbar.html')
-		.then(response => response.text())
-		.then(html => {
-			document.getElementById('navbar').innerHTML = html;
-		})
-		.catch(error => {
-			console.error('Error fetching the navbar:', error);
-		});
-
-	</script>
+    <script>
+        fetch('/dsb/navbar') 
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('navbar').innerHTML = ejs.render(html);
+        })
+        .catch(error => {
+            console.error('Error fetching the navbar:', error);
+        });
+    </script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update User</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <link rel="stylesheet" type="text/css" href="/dsb/css/style.css">
     <style>
         body {
             background-color: rgb(55, 50, 66);
@@ -106,7 +106,7 @@
 function updateForm() {
     $('#updateDetails').prop('disabled', true);
     $.ajax({
-        url: '/form/update',
+        url: '/dsb/form/update',
         type: 'PUT',
         data: $('#surveyForm').serialize(),
         success: function(response) {
@@ -132,7 +132,7 @@ function retrieveRecord() {
     var aadhar = prompt("Please enter the Aadhar Card Number to retrieve the record:");
     if (aadhar !== null) {
         $.ajax({
-            url: '/form/retrieve',
+            url: '/dsb/form/retrieve',
             type: 'GET',
             data: { aadhar: aadhar },
             success: function(response) {
@@ -176,13 +176,13 @@ function clearForm() {
 </body>
 <div id="footer" style="position: fixed; left: 0; bottom: 0; width: 100%;"></div>
 	<script>
-		fetch('footer.html')
-		.then(response => response.text())
-		.then(html => {
-			document.getElementById('footer').innerHTML = html;
-		})
-		.catch(error => {
-			console.error('Error fetching the footer:', error);
-		});
+		fetch('/dsb/footer') 
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('footer').innerHTML = ejs.render(html);
+        })
+        .catch(error => {
+            console.error('Error fetching the footer:', error);
+        });
 	</script>
 </html>

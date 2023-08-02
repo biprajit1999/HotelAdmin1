@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+    <script src="https://unpkg.com/ejs/ejs.min.js"></script>
     <div id="navbar"></div>
-	<script>
-		fetch('navbar.html')
-		.then(response => response.text())
-		.then(html => {
-			document.getElementById('navbar').innerHTML = html;
-		})
-		.catch(error => {
-			console.error('Error fetching the navbar:', error);
-		});
-
-	</script>
+    <script>
+        fetch('/dsb/navbar') 
+        .then(response => response.text())
+        .then(html => {
+            // Render the EJS template into the 'navbar' div
+            document.getElementById('navbar').innerHTML = ejs.render(html);
+        })
+        .catch(error => {
+            console.error('Error fetching the navbar:', error);
+        });
+    </script>
      
 <head>
     <meta charset="UTF-8">
@@ -19,7 +20,8 @@
     <title>User Registration</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/css/style.css"> -->
+    <link rel="stylesheet" type="text/css" href="/dsb/css/style.css">
     <style>
         body {
         background-color: rgb(237, 236, 239);
@@ -44,7 +46,7 @@
         </div>
 
         <div class="col-md-6 main">
-            <form id="registrationForm" action="/form" method="post">
+            <form id="registrationForm" action="/dsb/form" method="post">
                 <h1>Welcome to Paradise Cove Retreat</h1>
                 <p>Book Your Room</p>
                 <br>
@@ -116,13 +118,13 @@
 </body>
 <div id="footer" style="position: fixed; left: 0; bottom: 0; width: 100%;"></div>
 	<script>
-		fetch('footer.html')
-		.then(response => response.text())
-		.then(html => {
-			document.getElementById('footer').innerHTML = html;
-		})
-		.catch(error => {
-			console.error('Error fetching the footer:', error);
-		});
+		fetch('/dsb/footer') 
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('footer').innerHTML = ejs.render(html);
+        })
+        .catch(error => {
+            console.error('Error fetching the footer:', error);
+        });
 	</script>
 </html>

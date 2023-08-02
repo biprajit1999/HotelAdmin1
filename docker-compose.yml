@@ -41,6 +41,14 @@ services:
     depends_on:
       - mongodb
 
+  routes:
+    build:
+      context: ./routes
+    ports:
+      - "5025:5025"
+    depends_on:
+      - mongodb
+
 
  
 

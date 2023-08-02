@@ -41,10 +41,11 @@ app.engine('html', require('ejs').renderFile);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(express.static(__dirname + '/views'));
+// app.use(express.static(__dirname + '/views'));
+app.use('/dsb/css', express.static(__dirname + '/views/css'));
 
 const routes = require('./routes');
-app.use('/',routes);
+app.use('/ds',routes);
 
 
 app.use(function (req, res, next) {

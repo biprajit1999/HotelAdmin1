@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-    <div id="navbar"></div>
-	<script>
-		fetch('navbar.html')
-		.then(response => response.text())
-		.then(html => {
-			document.getElementById('navbar').innerHTML = html;
-		})
-		.catch(error => {
-			console.error('Error fetching the navbar:', error);
-		});
 
-	</script>
+  <script src="https://unpkg.com/ejs/ejs.min.js"></script>
+  <div id="navbar"></div>
+  <script>
+      fetch('/pr/navbar') 
+      .then(response => response.text())
+      .then(html => {
+          // Render the EJS template into the 'navbar' div
+          document.getElementById('navbar').innerHTML = ejs.render(html);
+      })
+      .catch(error => {
+          console.error('Error fetching the navbar:', error);
+      });
+  </script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="./css/profile.css">
+<link rel="stylesheet" type="text/css" href="/pr/css/style.css">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
 </script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -22,7 +27,197 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<link rel="stylesheet" href="./css/profile.css">
+
+
+  <style>
+    body {
+    background: #eceaea;
+}
+
+.container-fluid.custom-container {
+    
+    color: rgb(11, 1, 1);
+    width: 50%;
+    float:left;
+}
+
+.container {
+    background-color: black;
+    color: white;
+    width: 50%;
+    float:left;
+    padding: 0;
+    margin: 0;
+}
+
+.container-fluid.custom-container .row {
+    justify-content: flex-start;
+}
+
+.card {
+    border: none;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.col-md-3 {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+    .col-md-3 {
+        width: 100%;
+    }
+}
+
+.main {
+    background-color: #fff;
+    padding: 3rem;
+    border-radius: 8px;
+    margin: 0;
+}
+
+.box {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.btn-register {
+    background-color: #8E24AA;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#footer {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+
+  .slider-container {
+  position: relative;
+  height: 300px; 
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.slider-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.slider-item.active {
+  opacity: 1;
+}
+
+.slider-item.previous,
+.slider-item.next {
+  opacity: 0;
+}
+
+.slider-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slider-links {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.slider-link {
+  width: 15px;
+  height: 5px;
+  background-color: #111010;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.slider-link.active {
+  background-color: #8E24AA;
+}
+
+.slider-container {
+  position: relative;
+}
+
+.slider-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+}
+
+.slider-content h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.slider-content p {
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+body {
+		background-color: rgb(237, 236, 239);
+		background-image: url('https://source.unsplash.com/1920x1080/?hotel');
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center center;
+		position: relative;
+		min-height: 100vh;
+		min-width: 100vw;
+	}
+
+
+@media (max-width: 767px) {
+        .custom-container {
+            width: 100%;
+            position: sticky;
+        }
+        #c1
+        {
+            position: absolute;
+            width: 100%;
+            background-color:#fff;
+            overflow-x: scroll;
+            overflow-y: scroll;
+            overflow:visible;
+        }
+    }
+
+    h2
+    {
+        color: #8E24AA;
+        
+    }
+
+    .buttons 
+    {
+        background-color: #111010;
+    }
+  </style>
 
 <body>
     <header class="slider-header">
@@ -100,7 +295,7 @@
         <div class="container-fluid custom-container mt-4 d-flex justify-content-center" style="overflow: scroll;">
             <div class="row">
                 <div class="col-md-8 main" style="margin-left: 1px;">
-                    <form id="registrationForm" action="/check_room_availability" method="post">
+                    <form id="registrationForm" action="/pr/check_room_availability" method="post">
                         <h1 style="text-align: center;">Welcome to Paradise Cove Retreat</h1>
                         <p style="text-align: center;">Book Your Room</p>
                         
@@ -186,14 +381,15 @@ setInterval(nextSlide, 5000); // Change slide every 5 seconds
 </script>
 <div id="footer" style="position: fixed; left: 0; bottom: 0; width: 100%;"></div>
 	<script>
-		fetch('footer.html')
-		.then(response => response.text())
-		.then(html => {
-			document.getElementById('footer').innerHTML = html;
-		})
-		.catch(error => {
-			console.error('Error fetching the footer:', error);
-		});
+		fetch('/pr/footer') 
+        .then(response => response.text())
+        .then(html => {
+            // Render the EJS template into the 'navbar' div
+            document.getElementById('footer').innerHTML = ejs.render(html);
+        })
+        .catch(error => {
+            console.error('Error fetching the footer:', error);
+        });
 	</script>
 </html>
 
