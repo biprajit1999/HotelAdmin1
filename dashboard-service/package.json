@@ -13,7 +13,8 @@
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "mongoose": "^5.13.20",
-    "nodemailer": "^6.9.3"
+    "nodemailer": "^6.9.3",
+    "uuid": "^9.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

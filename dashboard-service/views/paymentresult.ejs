@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <script src="https://unpkg.com/ejs/ejs.min.js"></script>
+    <div id="navbar"></div>
+    <script>
+        fetch('/dsb/navbar') 
+        .then(response => response.text())
+        .then(html => {
+            // Render the EJS template into the 'navbar' div
+            document.getElementById('navbar').innerHTML = ejs.render(html);
+        })
+        .catch(error => {
+            console.error('Error fetching the navbar:', error);
+        });
+    </script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Result</title>
+    <link rel="stylesheet" type="text/css" href="/dsb/css/style.css">
+    <style>
+        /* Customize your styles here */
+        body {
+            background-color: #f8f8f8;
+        }
+
+        .container {
+            padding: 20px;
+            text-align: center;
+            /* background-color: #ffffff; */
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #333333;
+        }
+
+        .success-message {
+            color: #29b24a;
+        }
+
+        .failure-message {
+            color: #e74c3c;
+        }
+    </style>
+
+<style>
+    body {
+    background-color: rgb(237, 236, 239);
+    background-image: url('https://source.unsplash.com/1920x1080/?hotel');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+    min-height: 100vh;
+    min-width: 100vw;
+}  
+</style>
+
+
+</head>
+<body>
+    <div class="container" style="background-color: #ffffff;">
+        <h1>Payment Result</h1>
+
+        <% if (paymentStatus === 'success') { %>
+            <p class="success-message">Payment Successful</p>
+            <p>Transaction ID: <%= transactionId %></p>
+            <!-- Add additional content for successful payment -->
+        <% } else { %>
+            <p class="failure-message">Payment Failed</p>
+            <!-- Add additional content for failed payment -->
+        <% } %>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        // ... (existing JavaScript code) ...
+    </script>
+</body>
+<div id="footer" style="position: fixed; left: 0; bottom: 0; width: 100%;"></div>
+	<script>
+		fetch('/dsb/footer') 
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('footer').innerHTML = ejs.render(html);
+        })
+        .catch(error => {
+            console.error('Error fetching the footer:', error);
+        });
+	</script>
+</html>

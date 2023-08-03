@@ -9,7 +9,7 @@ let session = require('express-session');
 let MongoStore = require('connect-mongo')(session);
 const nodemailer = require('nodemailer');
 const axios = require('axios');
-
+const { v4: uuidv4 } = require('uuid');
 
 mongoose.connect('mongodb+srv://biprajit:biprajit@cluster0.has27be.mongodb.net/hotelty?retryWrites=true&w=majority', {
   useNewUrlParser: true,
@@ -52,56 +52,136 @@ const routes = require('./routes');
 
 app.use('/dsb', routes);
 
-app.post('/dsb/form', function(req, res) {
-    let name = req.body.name;
-    let phone = req.body.phone;
-    let aadhar = req.body.aadhar;
-    let room = req.body.room;
-    let checkIn = new Date(req.body.checkIn);
-    let checkOut = new Date(req.body.checkOut);
-    let email = req.body.email;
-  
-    let data = {
-      "name": name,
-      "phone": phone,
-      "aadhar": aadhar,
-      "room": room,
-      "checkIn": checkIn,
-      "checkOut": checkOut,
-      "email": email
-    };
-  
-    db.collection('detail').findOne({ aadhar: aadhar }, function(err, result) {
-      if (err) throw err;
-  
-      if (result) {
-        return res.redirect('/dsb/duplicate');
-      } else {
-        db.collection('detail').findOne({
-          room: room,
+
+async function checkRoomAvailabilityAndRegister(data) {
+  return new Promise((resolve, reject) => {
+      db.collection('detail').findOne({
+          room: data.room,
           $or: [
-            { $and: [{ checkIn: { $lte: checkIn } }, { checkOut: { $gt: checkIn } }] },
-            { $and: [{ checkIn: { $lt: checkOut } }, { checkOut: { $gte: checkOut } }] },
-            { $and: [{ checkIn: { $gte: checkIn } }, { checkOut: { $lte: checkOut } }] }
+              { $and: [{ checkIn: { $lte: data.checkIn } }, { checkOut: { $gt: data.checkIn } }] },
+              { $and: [{ checkIn: { $lt: data.checkOut } }, { checkOut: { $gte: data.checkOut } }] },
+              { $and: [{ checkIn: { $gte: data.checkIn } }, { checkOut: { $lte: data.checkOut } }] }
           ]
-        }, function(err, result) {
-          if (err) throw err;
-  
+      }, function (err, result) {
+          if (err) {
+              console.error('Error checking room availability:', err);
+              reject(err);
+          }
+
           if (result) {
-            return res.redirect('/dsb/roombooked');
+              resolve(false); // Room is already booked for the specified dates
           } else {
-            db.collection('detail').insertOne(data, function(err, collection) {
+              resolve(true); // Room is available
+          }
+      });
+  });
+}
+
+
+
+app.post('/dsb/form', async (req, res) => {
+  const name = req.body.name;
+  const phone = req.body.phone;
+  const aadhar = req.body.aadhar;
+  const room = req.body.room;
+  const checkIn = new Date(req.body.checkIn);
+  const checkOut = new Date(req.body.checkOut);
+  const email = req.body.email;
+  const cardNumber = req.body.cardNumber;
+  const expiration = req.body.expiration;
+  const cvv = req.body.cvv;
+
+  const data = {
+      name: name,
+      phone: phone,
+      aadhar: aadhar,
+      room: room,
+      checkIn: checkIn,
+      checkOut: checkOut,
+      email: email
+  };
+
+  try {
+      const isRoomAvailable = await checkRoomAvailabilityAndRegister(data);
+
+      if (!isRoomAvailable) {
+          return res.redirect('/dsb/roombooked');
+      }
+
+      const paymentResult = await processPayment(cardNumber, expiration, cvv);
+
+      if (paymentResult.status === 'success') {
+          // Mark the booking as successful
+          data.bookingStatus = 'success';
+
+          db.collection('detail').insertOne(data, function (err, collection) {
               if (err) throw err;
               console.log("Record inserted successfully");
               sendConfirmationEmail(email, name, room, checkIn, checkOut);
-            });
-  
-            return res.redirect('/dsb/success');
-          }
-        });
+          });
+
+          return res.redirect(`/dsb/paymentResult?status=success&transactionId=${paymentResult.transactionId}`);
+      } else {
+          return res.redirect('/dsb/paymentResult?status=failure');
       }
-    });
-  });
+  } catch (error) {
+      console.error('Error:', error);
+      res.redirect('/dsb/paymentResult?status=failure');
+  }
+});
+
+
+
+// app.post('/dsb/form', function(req, res) {
+//     let name = req.body.name;
+//     let phone = req.body.phone;
+//     let aadhar = req.body.aadhar;
+//     let room = req.body.room;
+//     let checkIn = new Date(req.body.checkIn);
+//     let checkOut = new Date(req.body.checkOut);
+//     let email = req.body.email;
+  
+//     let data = {
+//       "name": name,
+//       "phone": phone,
+//       "aadhar": aadhar,
+//       "room": room,
+//       "checkIn": checkIn,
+//       "checkOut": checkOut,
+//       "email": email
+//     };
+  
+//     db.collection('detail').findOne({ aadhar: aadhar }, function(err, result) {
+//       if (err) throw err;
+  
+//       if (result) {
+//         return res.redirect('/dsb/duplicate');
+//       } else {
+//         db.collection('detail').findOne({
+//           room: room,
+//           $or: [
+//             { $and: [{ checkIn: { $lte: checkIn } }, { checkOut: { $gt: checkIn } }] },
+//             { $and: [{ checkIn: { $lt: checkOut } }, { checkOut: { $gte: checkOut } }] },
+//             { $and: [{ checkIn: { $gte: checkIn } }, { checkOut: { $lte: checkOut } }] }
+//           ]
+//         }, function(err, result) {
+//           if (err) throw err;
+  
+//           if (result) {
+//             return res.redirect('/dsb/roombooked');
+//           } else {
+//             db.collection('detail').insertOne(data, function(err, collection) {
+//               if (err) throw err;
+//               console.log("Record inserted successfully");
+//               sendConfirmationEmail(email, name, room, checkIn, checkOut);
+//             });
+  
+//             return res.redirect('/dsb/success');
+//           }
+//         });
+//       }
+//     });
+//   });
   
   
   function sendConfirmationEmail(email, name, room, checkIn, checkOut) {
@@ -138,6 +218,51 @@ app.post('/dsb/form', function(req, res) {
     });
   }
 
+
+
+  app.get('/dsb/payment', (req, res) => {
+    const { status, transactionId } = req.query;
+    res.render('payment.ejs');
+  });
+
+//   function processPayment(cardNumber, expiration, cvv) {
+//     // Simulate successful payment for demonstration purposes
+//     const transactionId = uuidv4(); // Generate a unique transaction ID
+//     return Promise.resolve({ status: 'success', transactionId });
+// }
+
+function processPayment(cardNumber, expiration, cvv) {
+  if (cardNumber.length === 12 && cvv.length === 3) {
+      const transactionId = uuidv4(); 
+      return Promise.resolve({ status: 'success', transactionId });
+  } else {
+      return Promise.resolve({ status: 'failure', message: 'Invalid card details' });
+  }
+}
+
+// Routes
+
+
+app.post('/dsb/processPayment', async (req, res) => {
+    const { cardNumber, expiration, cvv } = req.body;
+
+    try {
+        const paymentResult = await processPayment(cardNumber, expiration, cvv);
+
+        if (paymentResult.status === 'success') {
+            res.redirect(`/dsb/paymentResult?status=success&transactionId=${paymentResult.transactionId}`);
+        } else {
+            res.redirect('/dsb/paymentResult?status=failure');
+        }
+    } catch (error) {
+        res.redirect('/dsb/paymentResult?status=failure');
+    }
+});
+
+app.get('/dsb/paymentResult', (req, res) => {
+  const { status, transactionId } = req.query;
+  res.render('paymentresult.ejs', { paymentStatus: status, transactionId });
+});
 
 
 

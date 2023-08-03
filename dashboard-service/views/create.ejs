@@ -33,12 +33,37 @@
         min-height: 100vh;
         min-width: 100vw;
     }  
+
+    .container {
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 15px;
+            /* background-color: white; */
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container::-webkit-scrollbar {
+            width: 0.5em;
+            display: none; /* Hide the scrollbar */
+        }
+
+        /* Track */
+        .container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        /* Handle */
+        .container::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 2px;
+        }
+
     </style>
 </head>
 <body>
-<br>
-<br>
-<br>
+<!-- <br>
+<br> -->
 <div class="container">
     <div class="row">
         <div class="col-md-3">
@@ -47,9 +72,10 @@
 
         <div class="col-md-6 main">
             <form id="registrationForm" action="/dsb/form" method="post">
+                <br>
                 <h1>Welcome to Paradise Cove Retreat</h1>
                 <p>Book Your Room</p>
-                <br>
+                
 
                 <input class="box" type="text" name="name" id="name" pattern="[A-Za-z\s]{3,}"
                        title="Please enter a valid name" placeholder="Name" required/><br><br>
@@ -90,8 +116,21 @@
                 <input class="box" type="email" name="email" id="email"
                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Please enter a valid email address"
                        placeholder="E-Mail" required/><br>
-                
-                <br>
+            
+
+                <h1>Payment Details</h1>
+                <div class="form-group">
+                    <label for="cardNumber">Card Number</label>
+                    <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="Card Number" required>
+                </div>
+                <div class="form-group">
+                    <label for="expiration">Expiration Date</label>
+                    <input type="text" class="form-control" id="expiration" name="expiration" placeholder="MM/YY" required>
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input type="text" class="form-control" id="cvv" name="cvv" placeholder="CVV" required>
+                </div>
                 
                 <b>Print a copy of your response :-</b>
                 <a style="background-color: #767474; color: white; border-radius: 4px;" id="print" onclick="window.print()">
