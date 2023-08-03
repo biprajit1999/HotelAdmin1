@@ -1,53 +1,101 @@
-version: '3.8'
+
+version: "3.8"
 
 services:
-
   mongodb:
     image: mongo:latest
-    container_name: mongodb
+    container_name: mongodb_admin1
     ports:
       - "27017:27017"
 
-
   auth-service:
-    build:
-      context: ./auth-service
+    image: biprajit1999/admin-hotel-auth:latest
     ports:
-      - "5005:5005"
+      - "7005:7005"
     depends_on:
       - mongodb
 
   profile-service:
-    build:
-      context: ./profile-service
+    image: biprajit1999/admin-hotel-profile:latest
     ports:
-      - "5002:5002"
+      - "7002:7002"
     depends_on:
       - mongodb
 
   dashboard-service:
-    build:
-      context: ./dashboard-service
+    image: biprajit1999/admin-hotel-dashboard:latest
     ports:
-      - "5003:5003"
+      - "7003:7003"
     depends_on:
       - mongodb
 
   feedback-service:
-    build:
-      context: ./feedback-service
+    image: biprajit1999/admin-hotel-feedback:latest
     ports:
-      - "5004:5004"
+      - "7004:7004"
     depends_on:
       - mongodb
 
   routes:
-    build:
-      context: ./routes
+    image: biprajit1999/admin-hotel-routes:latest
     ports:
-      - "5025:5025"
+      - "7027:7027"
     depends_on:
       - mongodb
+
+
+
+
+# version: '3.8'
+
+# services:
+
+#   mongodb:
+#     image: mongo:latest
+#     container_name: mongodb
+#     ports:
+#       - "27017:27017"
+
+
+#   auth-service:
+#     build:
+#       context: ./auth-service
+#     ports:
+#       - "5005:5005"
+#     depends_on:
+#       - mongodb
+
+#   profile-service:
+#     build:
+#       context: ./profile-service
+#     ports:
+#       - "5002:5002"
+#     depends_on:
+#       - mongodb
+
+#   dashboard-service:
+#     build:
+#       context: ./dashboard-service
+#     ports:
+#       - "5003:5003"
+#     depends_on:
+#       - mongodb
+
+#   feedback-service:
+#     build:
+#       context: ./feedback-service
+#     ports:
+#       - "5004:5004"
+#     depends_on:
+#       - mongodb
+
+#   routes:
+#     build:
+#       context: ./routes
+#     ports:
+#       - "5025:5025"
+#     depends_on:
+#       - mongodb
 
 
  

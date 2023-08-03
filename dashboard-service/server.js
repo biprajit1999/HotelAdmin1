@@ -225,11 +225,6 @@ app.post('/dsb/form', async (req, res) => {
     res.render('payment.ejs');
   });
 
-//   function processPayment(cardNumber, expiration, cvv) {
-//     // Simulate successful payment for demonstration purposes
-//     const transactionId = uuidv4(); // Generate a unique transaction ID
-//     return Promise.resolve({ status: 'success', transactionId });
-// }
 
 function processPayment(cardNumber, expiration, cvv) {
   if (cardNumber.length === 12 && cvv.length === 3) {
@@ -329,7 +324,7 @@ app.delete('/dsb/form/delete/:aadhar', function(req, res) {
 
 
 
-const PORT = process.env.PORT || 5003;
+const PORT = process.env.PORT || 7003;
 app.listen(PORT, function () {
   console.log(`Server is started on http://127.0.0.1:${PORT}`);
 });

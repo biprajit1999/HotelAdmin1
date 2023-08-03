@@ -12,10 +12,10 @@ const app = express();
 
 
 const routes = {
-  '/lg': 'http://auth-service:5005',     
-  '/dsb': 'http://dashboard-service:5003', 
-  '/pr': 'http://profile-service:5002',   
-  '/ds': 'http://feedback-service:5004'  
+  '/lg': 'http://auth-service:7005',     
+  '/dsb': 'http://dashboard-service:7003', 
+  '/pr': 'http://profile-service:7002',   
+  '/ds': 'http://feedback-service:7004'  
 }
 
 for(const route in routes){
@@ -25,7 +25,7 @@ for(const route in routes){
 
 
 
-const PORT = process.env.PORT || 5025;
+const PORT = process.env.PORT || 7027;
 app.listen(PORT, function () {
   console.log(`Server is started on http://127.0.0.1:${PORT}`);
 });

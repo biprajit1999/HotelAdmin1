@@ -50,7 +50,7 @@ const routes = require('./routes');
 app.use('/lg', routes);
 
 
-const PORT = process.env.PORT || 5005;
+const PORT = process.env.PORT || 7005;
 app.listen(PORT, function () {
   console.log(`Server is started on http://127.0.0.1:${PORT}`);
 });
