@@ -23,6 +23,74 @@
         {
             color: aliceblue;
         }
+
+		#tc {
+            background-image: url('https://img.freepik.com/free-vector/welcome-hotel-cartoon-poster_1284-23535.jpg?w=2000');
+            background-color: black;
+			background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            position: relative;
+            /* min-height: 100vh;
+            min-width: 100vw; */
+            padding: 30px;
+            border-radius: 10px;
+
+
+        }
+		.form-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="email"],
+        input[type="text"],
+        input[type="password"] {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            color: #333;
+            border-radius: 5px;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        input[type="email"]:focus,
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: aqua;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 12px;
+            width: 100%;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .mssg {
+            color: #333;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        a {
+            color: aqua;
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
         
     </style>
 
@@ -59,16 +127,18 @@
 	</script>
 </head>
 <body>
+	<br>
 	<h1 style="color: aliceblue; margin-top: 10vh;">Welcome To Paradise Cove Retreat</h1>
-	<div class="col-md-4 col-md-offset-4">
+	<p>Admin Login</p>
+	<div class="col-md-4 col-md-offset-4" id="tc">
 		<div style="margin-top: 50px;">
-			<p>Admin Login</p>
+			
 		</div>
 		<div class="form-group">
 			<form id="form" method="post" >
-				<input type="text" name="email" placeholder="E-mail" required="" class="form-control"><br/>
-				<input type="password" name="password" placeholder="Password" required="" class="form-control"><br/>
-				<input type="submit" value="Login" class="btn btn-success">
+				<input type="text" name="email" placeholder="E-mail" required="" class="form-control"><br/><br>
+				<input type="password" name="password" placeholder="Password" required="" class="form-control"><br/><br>
+				<input type="submit" value="Login" class="btn btn-success"><br><br>
 			</form>
 		</div>
 		<div class="mssg bg-danger">
