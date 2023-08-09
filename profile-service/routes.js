@@ -1,5 +1,7 @@
 const express = require('express');
+const morgan = require('morgan');
 const router = express.Router();
+router.use(morgan('combined'));
 const Detail = require('./models/detail');
 const Admin = require('./models/admin');
 const Feedback = require('./models/summary');
