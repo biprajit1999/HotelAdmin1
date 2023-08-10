@@ -7,7 +7,6 @@
       fetch('/pr/navbar') 
       .then(response => response.text())
       .then(html => {
-          // Render the EJS template into the 'navbar' div
           document.getElementById('navbar').innerHTML = ejs.render(html);
       })
       .catch(error => {
@@ -378,7 +377,7 @@ sliderLinks.forEach((link, index) => {
   });
 });
 
-setInterval(nextSlide, 5000); // Change slide every 5 seconds
+setInterval(nextSlide, 5000); 
 
 
 </script>
@@ -387,7 +386,6 @@ setInterval(nextSlide, 5000); // Change slide every 5 seconds
 		fetch('/pr/footer') 
         .then(response => response.text())
         .then(html => {
-            // Render the EJS template into the 'navbar' div
             document.getElementById('footer').innerHTML = ejs.render(html);
         })
         .catch(error => {
