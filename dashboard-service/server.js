@@ -69,9 +69,9 @@ async function checkRoomAvailabilityAndRegister(data) {
           }
 
           if (result) {
-              resolve(false); // Room is already booked for the specified dates
+              resolve(false); 
           } else {
-              resolve(true); // Room is available
+              resolve(true); 
           }
       });
   });
@@ -129,59 +129,6 @@ app.post('/dsb/form', async (req, res) => {
       res.redirect('/dsb/paymentResult?status=failure');
   }
 });
-
-
-
-// app.post('/dsb/form', function(req, res) {
-//     let name = req.body.name;
-//     let phone = req.body.phone;
-//     let aadhar = req.body.aadhar;
-//     let room = req.body.room;
-//     let checkIn = new Date(req.body.checkIn);
-//     let checkOut = new Date(req.body.checkOut);
-//     let email = req.body.email;
-  
-//     let data = {
-//       "name": name,
-//       "phone": phone,
-//       "aadhar": aadhar,
-//       "room": room,
-//       "checkIn": checkIn,
-//       "checkOut": checkOut,
-//       "email": email
-//     };
-  
-//     db.collection('detail').findOne({ aadhar: aadhar }, function(err, result) {
-//       if (err) throw err;
-  
-//       if (result) {
-//         return res.redirect('/dsb/duplicate');
-//       } else {
-//         db.collection('detail').findOne({
-//           room: room,
-//           $or: [
-//             { $and: [{ checkIn: { $lte: checkIn } }, { checkOut: { $gt: checkIn } }] },
-//             { $and: [{ checkIn: { $lt: checkOut } }, { checkOut: { $gte: checkOut } }] },
-//             { $and: [{ checkIn: { $gte: checkIn } }, { checkOut: { $lte: checkOut } }] }
-//           ]
-//         }, function(err, result) {
-//           if (err) throw err;
-  
-//           if (result) {
-//             return res.redirect('/dsb/roombooked');
-//           } else {
-//             db.collection('detail').insertOne(data, function(err, collection) {
-//               if (err) throw err;
-//               console.log("Record inserted successfully");
-//               sendConfirmationEmail(email, name, room, checkIn, checkOut);
-//             });
-  
-//             return res.redirect('/dsb/success');
-//           }
-//         });
-//       }
-//     });
-//   });
   
   
   function sendConfirmationEmail(email, name, room, checkIn, checkOut) {
@@ -234,8 +181,6 @@ function processPayment(cardNumber, expiration, cvv) {
       return Promise.resolve({ status: 'failure', message: 'Invalid card details' });
   }
 }
-
-// Routes
 
 
 app.post('/dsb/processPayment', async (req, res) => {

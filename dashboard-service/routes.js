@@ -5,7 +5,6 @@ router.use(morgan('combined'));
 const Detail = require('./models/detail');
 const Admin = require('./models/admin');
 const Feedback = require('./models/summary');
-const axios = require('axios');
 
 router.get('/navbar', function (req, res, next) {
 	return res.render('navbar.ejs');

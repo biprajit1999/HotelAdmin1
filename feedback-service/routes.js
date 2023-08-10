@@ -7,7 +7,7 @@ const Admin = require('./models/admin');
 const Feedback = require('./models/summary');
 
 router.get('/navbar', (req, res) => {
-    res.render('navbar.ejs'); // Renders the navbar.ejs file in the views directory
+    res.render('navbar.ejs'); 
 });
 
 
@@ -44,7 +44,7 @@ router.get('/summary', function (req, res, next) {
   });
 
   router.get('/footer', (req, res) => {
-    res.render('footer.ejs'); // Renders the navbar.ejs file in the views directory
+    res.render('footer.ejs'); 
 });
 
 

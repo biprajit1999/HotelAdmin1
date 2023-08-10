@@ -159,7 +159,7 @@
     roomSelect.addEventListener('change', () => {
         const selectedRoom = roomSelect.value;
         if (roomAmounts[selectedRoom]) {
-            amountSpan.textContent = `Amount: Rs${roomAmounts[selectedRoom]}`;
+            amountSpan.textContent = `Amount: Rs ${roomAmounts[selectedRoom]}`;
         } else {
             amountSpan.textContent = '';
         }
