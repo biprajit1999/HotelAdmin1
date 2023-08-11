@@ -91,6 +91,31 @@
         a:hover {
             text-decoration: underline;
         }
+
+        @media (max-width: 600px) {
+            input[type="email"],
+            input[type="text"],
+            input[type="password"] {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            input[type="email"],
+            input[type="text"],
+            input[type="password"] {
+                font-size: 12px;
+                padding: 6px;
+            }
+        }
+
+        #tc {
+            
+            width: 100%; 
+            max-width: 700px; 
+            margin: 0 auto; 
+        }
         
         
     </style>
@@ -128,8 +153,9 @@
 	</script>
 </head>
 <body>
+    <br><br><br><br>
 
-		<div class="col-md-4 col-md-offset-4" id="tc" style="margin-top: 15vh;">
+		<div class="col-md-4 col-md-offset-4" id="tc">
 			<br>
 			<br>
 			<div>
